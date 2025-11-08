@@ -2,6 +2,7 @@ package me.xiaoni0v0.sltech;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import me.xiaoni0v0.sltech.items.ArmorRemovalButton;
 import me.xiaoni0v0.sltech.items.SuicideStone;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -30,5 +31,6 @@ public class ItemManager {
 
     private void registerAllItems(SLTech plugin) {
         new SuicideStone(itemGroup).register(plugin);
+        new ArmorRemovalButton(itemGroup).register(plugin);
     }
 }
