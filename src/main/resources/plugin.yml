@@ -1,14 +1,14 @@
 ## CHANGE 更改此处为你的附属名称
-name: SlimefunAddon
+name: SLTech
 
 ## CHANGE 更改此处为你的名称
-author: CHANGEME
+author: xiaoni0v0
 
 ## CHANGE 这是对你插件的介绍
-description: A generic Slimefun4-Addon
+description: 一个Slimefun的附属插件，添加了一些玩家可能需要的功能。
 
 ## CHANGE 指向你的 JavaPlugin 主类
-main: me.CHANGEME.slimefunaddon.ExampleAddon
+main: me.xiaoni0v0.sltech.SLTech
 
 ## 你可以更改为你的项目仓库地址，或者你的个人网站。你也可以移除此项目。
 website: https://github.com/Slimefun/Addon-Template
@@ -22,4 +22,4 @@ api-version: 1.14
 
 ## 指定 Slimefun 作为依赖项，必须
 depend:
-- Slimefun
+  - Slimefun
