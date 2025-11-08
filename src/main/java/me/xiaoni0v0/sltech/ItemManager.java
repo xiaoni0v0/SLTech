@@ -29,5 +29,6 @@ public class ItemManager {
     }
 
     private void registerAllItems(SLTech plugin) {
+        new SuicideStone(itemGroup).register(plugin);
     }
 }
