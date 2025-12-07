@@ -1,7 +1,6 @@
 package me.xiaoni0v0.sltech.items;
 
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
-import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -9,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.Rechargeable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
+import me.xiaoni0v0.sltech.SLTech;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -21,18 +21,23 @@ public class ArmorRemovalButton extends SlimefunItem implements Rechargeable {
     private static final float CAPACITY = 100.0F;
     private static final float COST = 10.0F;
 
-    public ArmorRemovalButton(ItemGroup itemGroup) {
+    private static final SlimefunItemStack itemStack = new SlimefunItemStack(
+            "ARMOR_REMOVAL_BUTTON",
+            Material.STONE_BUTTON,
+            "&c脱&e甲&b按&a钮",
+
+            "",
+            "&7将所有护甲移到背包中",
+            "&7没想到吧，这个小东西是耗电的……",
+            LoreBuilder.powerCharged(0, (int) CAPACITY),
+            "",
+            "&e右键&7 使用"
+    );
+
+    public ArmorRemovalButton(SLTech plugin) {
         super(
-                itemGroup,
-                new SlimefunItemStack(
-                        "ARMOR_REMOVAL_BUTTON",
-                        Material.STONE_BUTTON,
-                        "&c脱&e甲&b按&a钮",
-                        "", "&7将所有护甲移到背包中", "&7没想到吧，这个小东西是耗电的……",
-                        LoreBuilder.powerCharged(0, (int) CAPACITY),
-                        "",
-                        "&e右键&7 使用"
-                ),
+                plugin.getItemManager().getItemGroup(),
+                itemStack,
                 RecipeType.ENHANCED_CRAFTING_TABLE,
                 new ItemStack[]{
                         new ItemStack(Material.STONE_BUTTON), SlimefunItems.CARBONADO_MULTI_TOOL, new ItemStack(Material.STONE_BUTTON),

@@ -2,25 +2,24 @@ package me.xiaoni0v0.sltech;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import me.xiaoni0v0.sltech.items.ArmorRemovalButton;
-import me.xiaoni0v0.sltech.items.SuicideStone;
+import me.xiaoni0v0.sltech.items.*;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 
 public class ItemManager {
-    public static final ItemManager instance = new ItemManager();
+    private final SLTech plugin;
+    private ItemGroup itemGroup;
 
-    private boolean isRegistered = false;
-    ItemGroup itemGroup;
-
-    public void registerAll(SLTech plugin) {
-        if (isRegistered) return;
-        isRegistered = true;
-        registerAllGroups(plugin);
-        registerAllItems(plugin);
+    public ItemManager(SLTech plugin) {
+        this.plugin = plugin;
     }
 
-    private void registerAllGroups(SLTech plugin) {
+    public void registerAll() {
+        registerAllGroups();
+        registerAllItems();
+    }
+
+    private void registerAllGroups() {
         itemGroup = new ItemGroup(
                 // 给你的分类提供一个独一无二的ID
                 new NamespacedKey(plugin, "sltech"),
@@ -29,8 +28,16 @@ public class ItemManager {
         );
     }
 
-    private void registerAllItems(SLTech plugin) {
-        new SuicideStone(itemGroup).register(plugin);
-        new ArmorRemovalButton(itemGroup).register(plugin);
+    private void registerAllItems() {
+        new SuicideStone(plugin).register(plugin);
+        new ArmorRemovalButton(plugin).register(plugin);
+        new BSoundMakerAllPlayers(plugin).register(plugin);
+        new BSoundBlocker_1(plugin).register(plugin);
+        new BSoundBlocker_2(plugin).register(plugin);
+        new BSoundEnhancer(plugin).register(plugin);
+    }
+
+    public ItemGroup getItemGroup() {
+        return itemGroup;
     }
 }

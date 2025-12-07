@@ -7,6 +7,11 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import org.jetbrains.annotations.NotNull;
 
 public class SLTech extends JavaPlugin implements SlimefunAddon {
+    private final ItemManager itemManager;
+
+    private SLTech() {
+        itemManager = new ItemManager(this);
+    }
 
     @Override
     public void onEnable() {
@@ -18,7 +23,12 @@ public class SLTech extends JavaPlugin implements SlimefunAddon {
             cfg.setValue("options.auto-update", false);
         }
 
-        ItemManager.instance.registerAll(this);
+        itemManager.registerAll();
+
+        getLogger().info("++++++++++++++++++++++++++++++++++++++++++++++++++");
+        getLogger().info("++                    SL科技                    ++");
+        getLogger().info("++                by SweetLitchi                ++");
+        getLogger().info("++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
     @Override
@@ -40,6 +50,10 @@ public class SLTech extends JavaPlugin implements SlimefunAddon {
          * 如果这是你插件的主类，只需要返回 "this" 即可。
          */
         return this;
+    }
+
+    public ItemManager getItemManager() {
+        return itemManager;
     }
 
 }
