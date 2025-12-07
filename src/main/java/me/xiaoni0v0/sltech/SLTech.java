@@ -39,7 +39,7 @@ public class SLTech extends JavaPlugin implements SlimefunAddon {
     @Override
     public String getBugTrackerURL() {
         // 你可以在这里返回你的问题追踪器的网址，而不是 null
-        return null;
+        return "https://github.com/xiaoni0v0/SLTech/issues";
     }
 
     @Override
