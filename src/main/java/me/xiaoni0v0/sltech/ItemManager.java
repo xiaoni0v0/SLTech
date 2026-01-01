@@ -37,6 +37,7 @@ public class ItemManager {
         new BSoundEnhancer(plugin).register(plugin);
         // 从此往后的物品的粘液物品 ID 记得加 SLTECH_ 前缀，以前的因为已经有了所以改不了了
         new ShrinkingBoots(plugin).register(plugin);
+        new HatFromHatFactory(plugin).register(plugin);
     }
 
     public ItemGroup getItemGroup() {
