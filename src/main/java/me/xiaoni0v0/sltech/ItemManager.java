@@ -35,6 +35,8 @@ public class ItemManager {
         new BSoundBlocker_1(plugin).register(plugin);
         new BSoundBlocker_2(plugin).register(plugin);
         new BSoundEnhancer(plugin).register(plugin);
+        // 从此往后的物品的粘液物品 ID 记得加 SLTECH_ 前缀，以前的因为已经有了所以改不了了
+        new ShrinkingBoots(plugin).register(plugin);
     }
 
     public ItemGroup getItemGroup() {
