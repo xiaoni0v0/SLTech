@@ -9,6 +9,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
 import me.xiaoni0v0.sltech.SLTech;
+import me.xiaoni0v0.sltech.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,8 +17,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
 public class BSoundMakerAllPlayers extends SlimefunItem implements Rechargeable {
     private final SLTech plugin;
@@ -28,6 +28,9 @@ public class BSoundMakerAllPlayers extends SlimefunItem implements Rechargeable 
     private final int SOUND_COUNT = 500;
     // 播放的时间（毫秒）
     private final int SOUND_DURATION = 2500;
+
+    // 防止有人一直使用，记录一下上次使用的日期
+    HashMap<UUID, String> LAST_USE_DATE = new HashMap<>();
 
     private static final SlimefunItemStack itemStack = new SlimefunItemStack(
             "B_SOUND_MAKER_ALL_PLAYERS",
@@ -66,10 +69,21 @@ public class BSoundMakerAllPlayers extends SlimefunItem implements Rechargeable 
 
         Player player = event.getPlayer();
 
+        // 先判断今天是否用了，如果是则不再激活
+        String lastUseDate = LAST_USE_DATE.get(player.getUniqueId());
+        String nowDate = Utils.getDateString();
+        if (lastUseDate != null && lastUseDate.equals(nowDate)) {
+            player.sendMessage(ChatColor.RED + "今天已经用过了！不能再使用！");
+            return;
+        }
+
         if (!removeItemCharge(event.getItem(), CAPACITY)) {
             player.sendMessage(ChatColor.RED + "没电了……");
             return;
         }
+
+        // 这时候就可以标记今天已经用过了
+        LAST_USE_DATE.put(player.getUniqueId(), nowDate);
 
         // 通知全服谁使用了B动静制造器
         Bukkit.broadcastMessage(
@@ -80,34 +94,40 @@ public class BSoundMakerAllPlayers extends SlimefunItem implements Rechargeable 
         );
 
         // “精挑细选”一些B动静
-        ArrayList<Sound> result = new ArrayList<>();
-        while (result.size() < SOUND_COUNT) {
+        ArrayList<Sound> sounds = new ArrayList<>();
+        while (sounds.size() < SOUND_COUNT) {
             Sound chosen = allSounds[(int) (Math.random() * allSounds.length)];
             // 音乐不要
-            if (chosen.toString().startsWith("MUSIC")) continue;
-            result.add(chosen);
+            if (!chosen.toString().startsWith("MUSIC")) {
+                sounds.add(chosen);
+            }
         }
 
         // 异步执行耗时任务
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             // 想要增强音效的 “VIP” 玩家们（好神经啊）
             HashSet<Player> vipPlayers = new HashSet<>();
+            for (Player eachPlayer : Bukkit.getOnlinePlayers()) {
+                if (Utils.checkSfItemID(
+                        eachPlayer.getInventory().getHelmet(),
+                        BSoundEnhancer.getItemStack().getItemId()
+                )) {
+                    vipPlayers.add(eachPlayer);
+                }
+            }
 
-            for (Sound sound : result) {
+            for (Sound sound : sounds) {
                 // 每个玩家都播放B动静
                 for (Player eachPlayer : Bukkit.getOnlinePlayers()) {
                     // 如果戴着头盔则相应改变音量
                     ItemStack helmet = eachPlayer.getInventory().getHelmet();
-                    eachPlayer.playSound(
-                            eachPlayer.getLocation(),
-                            sound,
-                            BSoundBlocker_1.getItemStack().isSimilar(helmet) ? 0.15F :
-                                    BSoundBlocker_2.getItemStack().isSimilar(helmet) ? 0.0F : 1.0F,
-                            1.0F
-                    );
-
-                    if (BSoundEnhancer.getItemStack().isSimilar(helmet)) {
-                        vipPlayers.add(eachPlayer);
+                    if (!Utils.checkSfItemID(helmet, BSoundBlocker_2.getItemStack().getItemId())) {
+                        eachPlayer.playSound(
+                                eachPlayer.getLocation(),
+                                sound,
+                                Utils.checkSfItemID(helmet, BSoundBlocker_1.getItemStack().getItemId()) ? 0.15F : 1.0F,
+                                1.0F
+                        );
                     }
                 }
                 // 保证所有播放都在 SOUND_DURATION 毫秒内完成
@@ -116,7 +136,7 @@ public class BSoundMakerAllPlayers extends SlimefunItem implements Rechargeable 
 
             // 给 “VIP” 玩家继续播放
             for (int ignored : new int[]{0, 1, 2}) {
-                for (Sound sound : result) {
+                for (Sound sound : sounds) {
                     for (Player eachVipPlayer : vipPlayers) {
                         eachVipPlayer.playSound(eachVipPlayer.getLocation(), sound, 1.0F, 1.0F);
                     }
