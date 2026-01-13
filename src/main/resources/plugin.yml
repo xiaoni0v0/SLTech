@@ -11,7 +11,7 @@ description: 一个Slimefun的附属插件，添加了一些玩家可能需要�
 main: me.xiaoni0v0.sltech.SLTech
 
 ## 你可以更改为你的项目仓库地址，或者你的个人网站。你也可以移除此项目。
-website: https://github.com/Slimefun/Addon-Template
+website: https://github.com/xiaoni0v0/SLTech
 
 ## 该值将在构建时被自动替换为pom.xml中定义的版本。
 ## 不要更改此项目。
