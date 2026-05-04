@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class SuicideStone extends SlimefunItem {
     private static final SlimefunItemStack itemStack = new SlimefunItemStack(
-            "SUICIDE_STONE",
+            "SLTECH_SUICIDE_STONE",
             Material.AMETHYST_SHARD,
             "&d紫砂",
 

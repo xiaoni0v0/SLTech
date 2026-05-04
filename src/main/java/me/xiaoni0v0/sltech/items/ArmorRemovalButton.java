@@ -22,7 +22,7 @@ public class ArmorRemovalButton extends SlimefunItem implements Rechargeable {
     private static final float COST = 10.0F;
 
     private static final SlimefunItemStack itemStack = new SlimefunItemStack(
-            "ARMOR_REMOVAL_BUTTON",
+            "SLTECH_ARMOR_REMOVAL_BUTTON",
             Material.STONE_BUTTON,
             "&c脱&e甲&b按&a钮",
 

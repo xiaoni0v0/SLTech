@@ -33,7 +33,7 @@ public class BSoundMakerAllPlayers extends SlimefunItem implements Rechargeable 
     HashMap<UUID, String> LAST_USE_DATE = new HashMap<>();
 
     private static final SlimefunItemStack itemStack = new SlimefunItemStack(
-            "B_SOUND_MAKER_ALL_PLAYERS",
+            "SLTECH_B_SOUND_MAKER_ALL_PLAYERS",
             Material.BELL,
             "&6B动静制造器 &7- &c全服版",
 

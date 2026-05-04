@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class BSoundBlocker_1 extends SlimefunItem {
     private static final SlimefunItemStack itemStack = new SlimefunItemStack(
-            "B_SOUND_BLOCKER_1",
+            "SLTECH_B_SOUND_BLOCKER_1",
             Material.GOLDEN_HELMET,
             "&6隔音头盔 &7- &cI",
 
